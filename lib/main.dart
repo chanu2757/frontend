@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '5_ImagePicker.dart';
-import 'appbar.dart';
+import 'page5/image_picker.dart';
+import 'demo.dart';
 import 'settings.dart';
 
 void main() {

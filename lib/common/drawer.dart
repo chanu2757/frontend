@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_bootstrap/flutter_bootstrap.dart';
-import 'package:bs_flutter_buttons/bs_flutter_buttons.dart';
 
-class DemoPage extends StatefulWidget {
+class SideBar extends StatelessWidget {
+  const SideBar({Key? key}) : super(key: key);
+
   @override
-  _DemoPageState createState() => _DemoPageState();
-}
-
-class _DemoPageState extends State<DemoPage> {
-  @override
-  void initState() {
-    super.initState();
-    bootstrapGridParameters(
-      gutterSize: 30,
-    );
-  }
-
-  Widget _sidebar(BuildContext context) {
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-              child: Text("Menu", style: TextStyle(color: Colors.grey)),
+            child: Text("Menu", style: TextStyle(color: Colors.grey)),
 
           ),
           ListTile(
@@ -57,34 +44,4 @@ class _DemoPageState extends State<DemoPage> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: _sidebar(context),
-      appBar: AppBar(
-        title: Container(
-          child: Image.asset("imgs/appbar.jpg"),
-          height: AppBar().preferredSize.height * 0.95,
-        ),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0.0,
-        leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                color: Colors.lightBlue,
-                tooltip: 'Menu',
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              );
-            }
-        ),
-      ),
-      body: SingleChildScrollView(
-
-      ),
-    );
-  }
 }
-

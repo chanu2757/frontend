@@ -37,6 +37,7 @@ dependencies:
   bs_flutter_responsive: ^1.0.1
   image_picker: ^0.8.3
   flustars: ^2.0.1
+  eva_icons_flutter: ^1.0.4
 
 dev_dependencies:
   flutter_test:
