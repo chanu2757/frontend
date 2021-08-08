@@ -3,16 +3,19 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'cropper.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Obtain a list of the available cameras on the device.
+  // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
   final cameras = await availableCameras();
 
-  // Get a specific camera from the list of available cameras.
+  // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
   final firstCamera = cameras.first;
 
   runApp(
@@ -40,28 +43,29 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  // CameraController와 Future를 저장하기 위해 두 개의 변수를 state 클래스에 정의
   late CameraController Camcontroller;
   late Future<void> initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
+    // 카메라의 현재 출력물을 보여주기 위해
+    // CameraController를 생성합니다.
     Camcontroller = CameraController(
-      // Get a specific camera from the list of available cameras.
+      // 이용 가능한 카메라 목록에서 특정 카메라를 가져옵니다.
       widget.camera,
-      // Define the resolution to use.
+      // 적용할 해상도를 지정합니다.
       ResolutionPreset.medium,
     );
 
-    // Next, initialize the controller. This returns a Future.
+    // 다음으로 controller를 초기화합니다. 초기화 메서드는 Future를 반환합니다.
     initializeControllerFuture = Camcontroller.initialize();
   }
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
+    // 위젯의 생명주기 종료시 컨트롤러 역시 해제시켜줍니다.
     Camcontroller.dispose();
     super.dispose();
   }
@@ -69,10 +73,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
+      appBar: AppBar(title: const Text('사진촬영')),
+      // 카메라 프리뷰를 보여주기 전에 컨트롤러 초기화를 기다려야 합니다. 컨트롤러 초기화가
+      // 완료될 때까지 FutureBuilder를 사용하여 로딩 스피너를 보여주세요.
       body: FutureBuilder<void>(
         future: initializeControllerFuture,
         builder: (context, snapshot) {
@@ -124,12 +127,14 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(imagePath);
+
     return Scaffold(
       appBar: AppBar(title: const Text('미리보기')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+       body: Image.file(File(imagePath)),
+
     );
+
   }
 }
